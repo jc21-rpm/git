@@ -1,0 +1,22 @@
+#!/bin/bash
+
+CWD=`pwd`
+PACKAGE=git
+DOCKER_IMAGE=jc21/rpmbuild-centos7
+BUILD_TAG=centos6-$PACKAGE-manual-run
+
+rm -rf RPMS SRPMS DEPS BUILD BUILDROOT
+mkdir -p {RPMS,SRPMS,DEPS,BUILD,BUILDROOT} && chmod -R 777 {RPMS,SRPMS,DEPS,BUILD,BUILDROOT}
+
+sudo docker run --rm \
+  --name rpmbuild-$BUILD_TAG \
+  -v $CWD/BUILD:/home/rpmbuilder/rpmbuild/BUILD \
+  -v $CWD/BUILDROOT:/home/rpmbuilder/rpmbuild/BUILDROOT \
+  -v $CWD/RPMS:/home/rpmbuilder/rpmbuild/RPMS \
+  -v $CWD/SRPMS:/home/rpmbuilder/rpmbuild/SRPMS \
+  -v $CWD/SPECS:/home/rpmbuilder/rpmbuild/SPECS \
+  $DOCKER_IMAGE \
+  /bin/build-spec /home/rpmbuilder/rpmbuild/SPECS/$PACKAGE.spec
+
+exit $?
+

@@ -211,7 +211,7 @@ rm -rf $RPM_BUILD_ROOT
 %{!?_without_docs: %{_mandir}/man5/*gitweb*.5*}
 %{!?_without_docs: %doc %{name}-%{version}/Documentation/*gitweb*.html }
 
-%files -n perl-Git -f perl-files
+%files -n perl-Git -f %{name}-%{version}/perl-files
 %defattr(-,root,root)
 %{_datadir}/perl5/
 
