@@ -147,7 +147,7 @@ install -m 644 -T contrib/completion/git-completion.bash $RPM_BUILD_ROOT%{_sysco
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f bin-man-doc-files
+%files -f %{name}-%{version}/bin-man-doc-files
 %defattr(-,root,root)
 %{_datadir}/git-core/
 %doc %{name}-%{version}/COPYING %{name}-%{version}/Documentation/*.txt
