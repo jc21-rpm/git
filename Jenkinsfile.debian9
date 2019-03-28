@@ -18,6 +18,9 @@ pipeline {
           git(url: "${RPM_SIGN_GIT_REPO}", credentialsId: "${RPM_SIGN_CREDENTIALS_ID}")
           sh 'chmod 600 .gnupg/*'
         }
+
+        // Change ownership of the directory we're going to mess with
+        sh 'docker run --rm -v $(pwd):/home/builder/package c21/dpkg-debian:9 chown -R builder:builder /home/builder/package/debian'
       }
     }
     stage('Build') {
