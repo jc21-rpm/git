@@ -1,6 +1,6 @@
 pipeline {
   options {
-    buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10'))
+    buildDiscarder(logRotator(numToKeepStr: '10'))
     disableConcurrentBuilds()
   }
   agent {
@@ -15,7 +15,8 @@ pipeline {
     }
     stage('Build') {
       steps {
-        sh '''CWD=`pwd`
+        dir(path: 'centos') {
+          sh '''CWD=$(pwd)
 PACKAGE=git
 BUILD_SPEC_ARGS=
 
@@ -34,6 +35,7 @@ CMD="docker run --rm \\
 $CMD
 
 exit $?'''
+        }
       }
     }
     stage('Sign') {
@@ -46,7 +48,8 @@ exit $?'''
           sh 'chmod 600 .gnupg/*'
         }
 
-        sh '''CWD=`pwd`
+        dir(path: 'centos') {
+          sh '''CWD=$(pwd)
 
 for RPMFILE in RPMS/*/*.rpm
 do
@@ -83,22 +86,20 @@ do
   rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 done
 '''
+        }
       }
     }
     stage('Publish') {
       steps {
-        dir(path: 'RPMS') {
+        dir(path: 'centos/RPMS') {
           archiveArtifacts(artifacts: '**/*/*.rpm', caseSensitive: true, onlyIfSuccessful: true)
         }
 
-        dir(path: 'SRPMS') {
+        dir(path: 'centos/SRPMS') {
           archiveArtifacts(artifacts: '**/*.src.rpm', caseSensitive: true, onlyIfSuccessful: true, allowEmptyArchive: true)
         }
       }
     }
-  }
-  triggers {
-    bitbucketPush()
   }
   post {
     success {
