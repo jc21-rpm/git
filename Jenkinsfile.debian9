@@ -22,18 +22,7 @@ pipeline {
     }
     stage('Build') {
       steps {
-        sh '''CWD=$(pwd)
-CMD="docker run --rm \\
-  --name dpkgbuild-${BUILD_TAG} \\
-  -v ${CWD}:/home/builder/package \\
-  -v ${CWD}/sign/.gnupg:/home/builder/.gnupg \\
-  -w /home/builder/package/debian \\
-  jc21/dpkg-debian:9 \\
-  bash -c 'chown -R builder:builder /home/builder/.gnupg && /home/builder/package/debian/build.sh'"
-
-$CMD
-
-exit $?'''
+        sh 'docker run --rm --name dpkgbuild-${BUILD_TAG} -v $(pwd):/home/builder/package -v $(pwd)/sign/.gnupg:/home/builder/.gnupg -w /home/builder/package/debian jc21/dpkg-debian:9 bash -c "chown -R builder:builder /home/builder/.gnupg && /home/builder/package/debian/build.sh"'
       }
     }
     stage('Publish') {
