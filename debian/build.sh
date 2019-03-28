@@ -24,7 +24,6 @@ cp -pr debian git-${VERSION}/
 # Build
 cd git-${VERSION}
 sudo mk-build-deps --install --tool='apt-get --no-install-recommends -y' debian/control
-dpkg-buildpackage -k EFD591B218E19AE3376D80D14F9E050D1DFFBB86 --force-sign
+dpkg-buildpackage --sign-key=EFD591B218E19AE3376D80D14F9E050D1DFFBB86 --force-sign
 
-rm -rf git-${VERSION}
 
