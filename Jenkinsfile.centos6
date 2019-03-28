@@ -48,19 +48,17 @@ exit $?'''
           sh 'chmod 600 .gnupg/*'
         }
 
-        dir(path: 'centos') {
-          sh '''CWD=$(pwd)
-
-for RPMFILE in RPMS/*/*.rpm
+        sh '''
+for RPMFILE in centos/RPMS/*/*.rpm
 do
   CMD="docker run --rm \\
-    --name rpmbuild-$BUILD_TAG \\
-    -v $CWD/RPMS:/data/RPMS \\
-    -v $CWD/sign:/data/sign \\
-    -v $CWD/sign/.rpmmacros:/root/.rpmmacros \\
-    -v $CWD/sign/.gnupg:/root/.gnupg \\
+    --name rpmbuild-${BUILD_TAG} \\
+    -v $(pwd)/centos/RPMS:/data/RPMS \\
+    -v $(pwd)/sign:/data/sign \\
+    -v $(pwd)/sign/.rpmmacros:/root/.rpmmacros \\
+    -v $(pwd)/sign/.gnupg:/root/.gnupg \\
     ${DOCKER_CI_TOOLS} \\
-    /data/sign/addsign.exp /data/$RPMFILE"
+    /data/sign/addsign.exp /data/${RPMFILE}"
 
   $CMD
 
@@ -69,16 +67,16 @@ do
 done
 
 # source rpms
-for RPMFILE in SRPMS/*.src.rpm
+for RPMFILE in centos/SRPMS/*.src.rpm
 do
   CMD="docker run --rm \\
-    --name rpmbuild-$BUILD_TAG \\
-    -v $CWD/SRPMS:/data/SRPMS \\
-    -v $CWD/sign:/data/sign \\
-    -v $CWD/sign/.rpmmacros:/root/.rpmmacros \\
-    -v $CWD/sign/.gnupg:/root/.gnupg \\
+    --name rpmbuild-${BUILD_TAG} \\
+    -v $(pwd)/centos/SRPMS:/data/SRPMS \\
+    -v $(pwd)/sign:/data/sign \\
+    -v $(pwd)/sign/.rpmmacros:/root/.rpmmacros \\
+    -v $(pwd)/sign/.gnupg:/root/.gnupg \\
     ${DOCKER_CI_TOOLS} \\
-    /data/sign/addsign.exp /data/$RPMFILE"
+    /data/sign/addsign.exp /data/${RPMFILE}"
 
   $CMD
 
@@ -86,7 +84,6 @@ do
   rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 done
 '''
-        }
       }
     }
     stage('Publish') {
@@ -112,3 +109,4 @@ done
     }
   }
 }
+
