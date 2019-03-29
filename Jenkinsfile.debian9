@@ -31,7 +31,7 @@ pipeline {
     stage('Publish') {
       steps {
         dir(path: 'debian') {
-          archiveArtifacts(artifacts: '**/*.deb', caseSensitive: true, onlyIfSuccessful: true)
+          archiveArtifacts(artifacts: '*.deb', caseSensitive: true, onlyIfSuccessful: true)
         }
       }
     }
