@@ -31,11 +31,7 @@ pipeline {
     stage('Publish') {
       steps {
         dir(path: 'debian') {
-          archiveArtifacts(artifacts: '*.deb', caseSensitive: true, onlyIfSuccessful: true)
-          archiveArtifacts(artifacts: '*.dsc', caseSensitive: true, onlyIfSuccessful: true)
-          archiveArtifacts(artifacts: '*.changes', caseSensitive: true, onlyIfSuccessful: true)
-          archiveArtifacts(artifacts: '*.buildinfo', caseSensitive: true, onlyIfSuccessful: true)
-          archiveArtifacts(artifacts: '*.orig.tar.gz', caseSensitive: true, onlyIfSuccessful: true)
+          archiveArtifacts(artifacts: 'git*.*', caseSensitive: true, onlyIfSuccessful: true)
         }
       }
     }
