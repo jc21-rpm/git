@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Prepare') {
       steps {
-        sh 'docker pull jc21/dpkg-linuxmint:19'
+        sh 'docker pull jc21/dpkg-mint:19'
         sh 'docker pull ${DOCKER_CI_TOOLS}'
         sh 'rm -rf sign'
         sh 'mkdir -p sign'
@@ -20,12 +20,12 @@ pipeline {
         }
 
         // Change ownership of the directory we're going to mess with
-        sh 'docker run --rm -v $(pwd):/home/builder/package jc21/dpkg-linuxmint:19 sudo chown -R builder:builder /home/builder/package/debian'
+        sh 'docker run --rm -v $(pwd):/home/builder/package jc21/dpkg-mint:19 sudo chown -R builder:builder /home/builder/package/debian'
       }
     }
     stage('Build') {
       steps {
-        sh 'docker run --rm --name dpkgbuild-${BUILD_TAG} -v $(pwd):/home/builder/package -v $(pwd)/sign/.gnupg:/home/builder/.gnupg -w /home/builder/package/debian jc21/dpkg-linuxmint:19 bash -c "sudo chown -R builder:builder /home/builder/.gnupg && /home/builder/package/debian/build.sh"'
+        sh 'docker run --rm --name dpkgbuild-${BUILD_TAG} -v $(pwd):/home/builder/package -v $(pwd)/sign/.gnupg:/home/builder/.gnupg -w /home/builder/package/debian jc21/dpkg-mint:19 bash -c "sudo chown -R builder:builder /home/builder/.gnupg && /home/builder/package/debian/build.sh"'
       }
     }
     stage('Publish') {
