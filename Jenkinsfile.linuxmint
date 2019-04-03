@@ -1,0 +1,49 @@
+pipeline {
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '10'))
+    disableConcurrentBuilds()
+  }
+  agent {
+    label 'rpm'
+  }
+  stages {
+    stage('Prepare') {
+      steps {
+        sh 'docker pull jc21/dpkg-linuxmint:19'
+        sh 'docker pull ${DOCKER_CI_TOOLS}'
+        sh 'rm -rf sign'
+        sh 'mkdir -p sign'
+
+        dir(path: 'sign') {
+          git(url: "${RPM_SIGN_GIT_REPO}", credentialsId: "${RPM_SIGN_CREDENTIALS_ID}")
+          sh 'chmod 600 .gnupg/*'
+        }
+
+        // Change ownership of the directory we're going to mess with
+        sh 'docker run --rm -v $(pwd):/home/builder/package jc21/dpkg-linuxmint:19 sudo chown -R builder:builder /home/builder/package/debian'
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'docker run --rm --name dpkgbuild-${BUILD_TAG} -v $(pwd):/home/builder/package -v $(pwd)/sign/.gnupg:/home/builder/.gnupg -w /home/builder/package/debian jc21/dpkg-linuxmint:19 bash -c "sudo chown -R builder:builder /home/builder/.gnupg && /home/builder/package/debian/build.sh"'
+      }
+    }
+    stage('Publish') {
+      steps {
+        dir(path: 'debian') {
+          archiveArtifacts(artifacts: 'git*.*', caseSensitive: true, onlyIfSuccessful: true)
+        }
+      }
+    }
+  }
+  post {
+    success {
+      juxtapose event: 'success'
+      sh 'figlet "SUCCESS"'
+    }
+    failure {
+      juxtapose event: 'failure'
+      sh 'figlet "FAILURE"'
+    }
+  }
+}

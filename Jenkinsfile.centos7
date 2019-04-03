@@ -53,7 +53,7 @@ for RPMFILE in centos/RPMS/*/*.rpm
 do
   CMD="docker run --rm \\
     --name rpmbuild-${BUILD_TAG} \\
-    -v $(pwd)/centos/RPMS:/data/RPMS \\
+    -v $(pwd)/centos/RPMS:/data/centos/RPMS \\
     -v $(pwd)/sign:/data/sign \\
     -v $(pwd)/sign/.rpmmacros:/root/.rpmmacros \\
     -v $(pwd)/sign/.gnupg:/root/.gnupg \\
@@ -71,7 +71,7 @@ for RPMFILE in centos/SRPMS/*.src.rpm
 do
   CMD="docker run --rm \\
     --name rpmbuild-${BUILD_TAG} \\
-    -v $(pwd)/centos/SRPMS:/data/SRPMS \\
+    -v $(pwd)/centos/SRPMS:/data/centos/SRPMS \\
     -v $(pwd)/sign:/data/sign \\
     -v $(pwd)/sign/.rpmmacros:/root/.rpmmacros \\
     -v $(pwd)/sign/.gnupg:/root/.gnupg \\
