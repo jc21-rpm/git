@@ -1,0 +1,7 @@
+{
+  "publish": {
+    "PACKAGE": "git",
+    "GH_USER": "jc21-rpm",
+    "VERSION": "2.23.0"
+  }
+}

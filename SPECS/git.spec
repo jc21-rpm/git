@@ -1,7 +1,7 @@
 # Pass --without docs to rpmbuild if you don't want the documentation
 
 Name:       git
-Version:    2.21.0
+Version:    2.23.0
 Release:    1
 Summary:    Core git tools
 License:    GPL
