@@ -20,7 +20,7 @@ pipeline {
     stage('Build') {
       steps {
         ansiColor('xterm') {
-          sh './build 7'
+          sh './build 8'
         }
       }
     }
@@ -39,7 +39,7 @@ pipeline {
         dir(path: 'SRPMS') {
           archiveArtifacts(artifacts: '**/*.src.rpm', caseSensitive: true, onlyIfSuccessful: true, allowEmptyArchive: true)
         }
-        rpmGithubRelease('centos7')
+        rpmGithubRelease('centos8')
       }
     }
   }
