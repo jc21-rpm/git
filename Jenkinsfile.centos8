@@ -8,9 +8,6 @@ pipeline {
   agent {
     label 'rpm'
   }
-  environment {
-    NOMIRROR = "true"
-  }
   stages {
     stage('Prepare') {
       steps {
