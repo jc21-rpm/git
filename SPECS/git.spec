@@ -1,7 +1,7 @@
 # Pass --without docs to rpmbuild if you don't want the documentation
 
 Name:       git
-Version:    2.23.0
+Version:    2.24.1
 Release:    1
 Summary:    Core git tools
 License:    GPL
@@ -219,6 +219,9 @@ rm -rf $RPM_BUILD_ROOT
 # No files for you!
 
 %changelog
+* Mon Dec 23 2019 Jamie Curnow <jc@jc21.com> - 2.24.1-1
+- Updated to v2.24.1
+
 * Thu Mar 28 2019 Jamie Curnow <jc@jc21.com> - 2.21.0-1
 - Updated to v2.21.0
 
