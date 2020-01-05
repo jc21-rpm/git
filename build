@@ -74,14 +74,20 @@ for SPECFILE in SPECS/*.spec; do
                 DISABLE_MIRROR=-m
             fi
 
+            # If centos 8, we want -n option
+            NOBEST=
+            if [ "${CENTOS_VERSION}" == "8" ]; then
+              NOBEST=-n
+            fi
+
             # If cpp11, use a special command
             # This is a convoluted solution I know.
-            DOCKER_COMMAND="/bin/build-spec $DISABLE_MIRROR -o -r /home/rpmbuilder/rpmbuild/DEPS/*/*.rpm -- /home/rpmbuilder/rpmbuild/SPECS/${PACKAGE}.spec"
+            DOCKER_COMMAND="/bin/build-spec ${DISABLE_MIRROR} ${NOBEST} -o -r /home/rpmbuilder/rpmbuild/DEPS/*/*.rpm -- /home/rpmbuilder/rpmbuild/SPECS/${PACKAGE}.spec"
             ADDITIONAL_MOUNT=""
             if [ "$DOCKER_TAG" == "cpp11" ]; then
                 TMPFILE=`mktemp /tmp/rpmbuild.XXXXXXXX`
                 chmod 777 "${TMPFILE}"
-                echo "source /opt/rh/devtoolset-2/enable && /bin/build-spec $DISABLE_MIRROR -o -p python-sphinx -p python-devel -r \"/home/rpmbuilder/rpmbuild/DEPS/*/*.rpm\" /home/rpmbuilder/rpmbuild/SPECS/${PACKAGE}.spec" >> "${TMPFILE}"
+                echo "source /opt/rh/devtoolset-2/enable && /bin/build-spec ${DISABLE_MIRROR} ${NOBEST} -o -p python-sphinx -p python-devel -r \"/home/rpmbuilder/rpmbuild/DEPS/*/*.rpm\" /home/rpmbuilder/rpmbuild/SPECS/${PACKAGE}.spec" >> "${TMPFILE}"
                 ADDITIONAL_MOUNT="-v ${TMPFILE}:/tmp/runme.sh"
                 DOCKER_COMMAND="bash /tmp/runme.sh"
             fi
