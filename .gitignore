@@ -7,3 +7,6 @@ DEPS
 BUILD
 BUILDROOT
 *.swp
+SOURCES/git-*.sign
+SOURCES/git-*.xz
+SOURCES/*.gpg

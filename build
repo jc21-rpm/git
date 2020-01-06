@@ -93,13 +93,14 @@ for SPECFILE in SPECS/*.spec; do
             fi
 
             # Docker Run
+            RPMBUILD=/home/rpmbuilder/rpmbuild
             docker run --rm \
               --name rpmbuild-${BUILD_TAG:-centos${CENTOS_VERSION}-${PACKAGE}} \
-              -v ${CWD}/DEPS:/home/rpmbuilder/rpmbuild/DEPS \
-              -v ${CWD}/RPMS:/home/rpmbuilder/rpmbuild/RPMS \
-              -v ${CWD}/SRPMS:/home/rpmbuilder/rpmbuild/SRPMS \
-              -v ${CWD}/SPECS:/home/rpmbuilder/rpmbuild/SPECS \
-              -v ${CWD}/SOURCES:/home/rpmbuilder/rpmbuild/SOURCES \
+              -v ${CWD}/DEPS:${RPMBUILD}/DEPS \
+              -v ${CWD}/RPMS:${RPMBUILD}/RPMS \
+              -v ${CWD}/SRPMS:${RPMBUILD}/SRPMS \
+              -v ${CWD}/SPECS:${RPMBUILD}/SPECS \
+              -v ${CWD}/SOURCES:${RPMBUILD}/SOURCES \
               ${ADDITIONAL_MOUNT} \
               -e GOPROXY=${GOPROXY} \
               ${DOCKER_IMAGE}:${DOCKER_TAG} \
