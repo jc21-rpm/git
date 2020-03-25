@@ -638,8 +638,7 @@ install -pm 755 contrib/credential/libsecret/git-credential-libsecret \
     %{buildroot}%{gitexecdir}
 %endif
 # endif libsecret
-install -pm 755 contrib/credential/netrc/git-credential-netrc \
-    %{buildroot}%{gitexecdir}
+
 # temporarily move contrib/credential/netrc aside to prevent it from being
 # deleted in the docs preparation, so the tests can be run in %%check
 mv contrib/credential/netrc .
