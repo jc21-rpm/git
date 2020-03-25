@@ -92,7 +92,7 @@
 #global rcrev   .rc0
 
 Name:           git
-Version:        2.24.1
+Version:        2.26.0
 Release:        2%{?rcrev}%{?dist}
 Summary:        Fast Version Control System
 License:        GPLv2
