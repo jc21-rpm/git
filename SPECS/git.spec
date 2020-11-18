@@ -92,7 +92,7 @@
 #global rcrev   .rc0
 
 Name:           git
-Version:        2.26.0
+Version:        2.29.2
 Release:        2%{?rcrev}%{?dist}
 Summary:        Fast Version Control System
 License:        GPLv2
@@ -1028,6 +1028,9 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Wed Nov 18 2020 Todd Zullinger <tmz@pobox.com> - 2.29.2-1
+- v2.29.2
+
 * Thu Dec 19 2019 Todd Zullinger <tmz@pobox.com> - 2.24.1-2
 - fix git-daemon systemd scriptlets (#1785088)
 
