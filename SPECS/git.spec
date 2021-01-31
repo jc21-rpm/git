@@ -92,8 +92,8 @@
 #global rcrev   .rc0
 
 Name:           git
-Version:        2.29.2
-Release:        2%{?rcrev}%{?dist}
+Version:        2.30.0
+Release:        1%{?rcrev}%{?dist}
 Summary:        Fast Version Control System
 License:        GPLv2
 URL:            https://git-scm.com/
@@ -1028,6 +1028,9 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Mon Feb 1 2021 Jamie Curnow <jc@jc21.com> - 2.30.0-1
+- v2.30.0
+
 * Wed Nov 18 2020 Todd Zullinger <tmz@pobox.com> - 2.29.2-1
 - v2.29.2
 
