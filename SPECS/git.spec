@@ -92,7 +92,7 @@
 #global rcrev   .rc0
 
 Name:           git
-Version:        2.30.0
+Version:        2.32.0
 Release:        1%{?rcrev}%{?dist}
 Summary:        Fast Version Control System
 License:        GPLv2
@@ -1028,6 +1028,9 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Mon Jul 5 2021 Jamie Curnow <jc@jc21.com> - 2.32.0-1
+- v2.32.0
+
 * Mon Feb 1 2021 Jamie Curnow <jc@jc21.com> - 2.30.0-1
 - v2.30.0
 
