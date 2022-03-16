@@ -92,7 +92,7 @@
 #global rcrev   .rc0
 
 Name:           git
-Version:        2.32.0
+Version:        2.35.1
 Release:        1%{?rcrev}%{?dist}
 Summary:        Fast Version Control System
 License:        GPLv2
@@ -597,9 +597,6 @@ export SOURCE_DATE_EPOCH=$(date -r version +%%s 2>/dev/null)
 sed -i -e '1s@#! */usr/bin/env python$@#!%{__python2}@' \
     contrib/fast-import/import-zips.py \
     contrib/hg-to-git/hg-to-git.py \
-    contrib/hooks/multimail/git_multimail.py \
-    contrib/hooks/multimail/migrate-mailhook-config \
-    contrib/hooks/multimail/post-receive.example \
     contrib/svn-fe/svnrdump_sim.py
 %else
 # Remove contrib/fast-import/import-zips.py, contrib/hg-to-git, and
@@ -610,12 +607,12 @@ rm -rf contrib/fast-import/import-zips.py contrib/hg-to-git contrib/svn-fe
 
 # The multimail hook is installed with git.  Use python3 to avoid an
 # unnecessary python2 dependency, if possible.
-%if %{with python3}
-sed -i -e '1s@#!\( */usr/bin/env python\|%{__python2}\)$@#!%{__python3}@' \
-    contrib/hooks/multimail/git_multimail.py \
-    contrib/hooks/multimail/migrate-mailhook-config \
-    contrib/hooks/multimail/post-receive.example
-%endif
+#%if %{with python3}
+#sed -i -e '1s@#!\( */usr/bin/env python\|%{__python2}\)$@#!%{__python3}@' \
+#    contrib/hooks/multimail/git_multimail.py \
+#    contrib/hooks/multimail/migrate-mailhook-config \
+#    contrib/hooks/multimail/post-receive.example
+#%endif
 # endif with python3
 
 %install
@@ -719,7 +716,7 @@ install -pm 644 contrib/completion/git-completion.tcsh \
     %{buildroot}%{_datadir}/git-core/contrib/completion/
 
 # Drop .py extension from git_multimail to avoid byte-compiling
-mv contrib/hooks/multimail/git_multimail{.py,}
+#mv contrib/hooks/multimail/git_multimail{.py,}
 
 # Move contrib/hooks out of %%docdir
 mkdir -p %{buildroot}%{_datadir}/git-core/contrib
@@ -1028,6 +1025,9 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Wed Mar 16 2022 Jamie Curnow <jc@jc21.com> - 2.35.1-1
+- v2.35.1
+
 * Mon Jul 5 2021 Jamie Curnow <jc@jc21.com> - 2.32.0-1
 - v2.32.0
 
