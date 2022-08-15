@@ -80,6 +80,7 @@
 # Hardening flags for EL-7
 %if 0%{?rhel} == 7
 %global _hardened_build     1
+%global build_cflags        %{build_cflags} -std=gnu99
 %endif
 
 # Hardening flags for EL-6
@@ -92,7 +93,7 @@
 #global rcrev   .rc0
 
 Name:           git
-Version:        2.35.1
+Version:        2.37.2
 Release:        1%{?rcrev}%{?dist}
 Summary:        Fast Version Control System
 License:        GPLv2
@@ -1025,6 +1026,9 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Mon Aug 15 2022 Jamie Curnow <jc@jc21.com> - 2.37.2-1
+- v2.37.2
+
 * Wed Mar 16 2022 Jamie Curnow <jc@jc21.com> - 2.35.1-1
 - v2.35.1
 
