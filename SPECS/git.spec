@@ -1,3 +1,5 @@
+%global debug_package %{nil}
+
 # Pass --without docs to rpmbuild if you don't want the documentation
 %bcond_without docs
 
@@ -94,7 +96,7 @@
 
 Name:           git
 Version:        2.37.2
-Release:        1%{?rcrev}%{?dist}
+Release:        1%{?rcrev}
 Summary:        Fast Version Control System
 License:        GPLv2
 URL:            https://git-scm.com/
