@@ -9,13 +9,10 @@ pipeline {
 	agent {
 		label 'rpmbuild'
 	}
-	environment {
-		NOMIRROR = 'true'
-	}
 	stages {
 		stage('Build') {
 			steps {
-				sh './build 7'
+				sh './build 9'
 			}
 		}
 		stage('Sign') {
@@ -31,7 +28,7 @@ pipeline {
 				dir(path: 'SRPMS') {
 					archiveArtifacts(artifacts: '**/*.src.rpm', caseSensitive: true, onlyIfSuccessful: true, allowEmptyArchive: true)
 				}
-				rpmGithubRelease('centos7')
+				rpmGithubRelease('el9')
 			}
 		}
 	}
