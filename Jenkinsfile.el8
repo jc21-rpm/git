@@ -7,16 +7,12 @@ pipeline {
 		ansiColor('xterm')
 	}
 	agent {
-		label 'rpmbuild'
+		label 'rpm'
 	}
 	stages {
 		stage('Build') {
 			steps {
-				sh './build 8'
-			}
-		}
-		stage('Sign') {
-			steps {
+				rpmBuild(8)
 				rpmSign()
 			}
 		}
