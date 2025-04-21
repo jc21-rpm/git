@@ -77,7 +77,7 @@
 %global _package_note_file  %{_builddir}/%{name}-%{real_version}/.package_note-%{name}-%{version}-%{release}.%{_arch}.ld
 
 Name:           git
-Version:        2.48.1
+Version:        2.49.0
 Release:        1%{?dist}
 Summary:        Fast Version Control System
 License:        BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -534,7 +534,7 @@ install -p -m 755 %{SOURCE99} print-failed-test-output
 # Remove git-archimport
 sed -i '/^SCRIPT_PERL += git-archimport\.perl$/d' Makefile
 sed -i '/^git-archimport/d' command-list.txt
-rm git-archimport.perl Documentation/git-archimport.txt
+rm -f git-archimport.perl Documentation/git-archimport.txt
 
 %if %{without cvs}
 # Remove git-cvs* from command list
@@ -1038,6 +1038,9 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Mon Apr 21 2025 Jamie Curnow <jc@jc21.com> - 2.49.0-1
+- update to 2.49.0
+
 * Wed Feb 26 2025 Jamie Curnow <jc@jc21.com> - 2.48.1-1
 - update to 2.48.1
 
