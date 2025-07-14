@@ -607,7 +607,7 @@ sed -i 's@"++GITWEB_HOME_LINK_STR++"@$ENV{"SERVER_NAME"} ? "git://" . $ENV{"SERV
 
 # Move contrib/{contacts,subtree} docs to Documentation so they build with the
 # proper asciidoc/docbook/xmlto options
-mv contrib/{contacts,subtree}/git-*.txt Documentation/
+# mv contrib/{contacts,subtree}/git-*.txt Documentation/
 
 %build
 # Improve build reproducibility
@@ -774,7 +774,7 @@ grep -E  "$not_core_re" bin-man-doc-files > bin-man-doc-git-files
 # contrib
 not_core_doc_re="(git-(cvs|gui|citool|daemon|instaweb|subtree))|p4|svn|email|gitk|gitweb"
 mkdir -p %{buildroot}%{_pkgdocdir}/
-cp -pr CODE_OF_CONDUCT.md README.md Documentation/*.txt Documentation/RelNotes contrib %{buildroot}%{_pkgdocdir}/
+cp -pr CODE_OF_CONDUCT.md README.md Documentation/RelNotes contrib %{buildroot}%{_pkgdocdir}/
 # Remove contrib/ files/dirs which have nothing useful for documentation
 rm -rf %{buildroot}%{_pkgdocdir}/contrib/{contacts,credential}/
 cp -p gitweb/INSTALL %{buildroot}%{_pkgdocdir}/INSTALL.gitweb
@@ -951,28 +951,28 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 
 %if %{with cvs}
 %files cvs
-%{_pkgdocdir}/*git-cvs*.txt
+# %{_pkgdocdir}/*git-cvs*.txt
 %{_bindir}/git-cvsserver
 %{gitexecdir}/*cvs*
 %{?with_docs:%{_mandir}/man1/*cvs*.1*}
-%{?with_docs:%{_pkgdocdir}/*git-cvs*.html}
+# %{?with_docs:%{_pkgdocdir}/*git-cvs*.html}
 %endif
 # endif with cvs
 
 %files daemon
-%{_pkgdocdir}/git-daemon*.txt
+# %{_pkgdocdir}/git-daemon*.txt
 %{_unitdir}/git.socket
 %{_unitdir}/git@.service
 %{gitexecdir}/git-daemon
 %{_localstatedir}/lib/git
 %{?with_docs:%{_mandir}/man1/git-daemon*.1*}
-%{?with_docs:%{_pkgdocdir}/git-daemon*.html}
+# %{?with_docs:%{_pkgdocdir}/git-daemon*.html}
 
 %files email
-%{_pkgdocdir}/*email*.txt
+# %{_pkgdocdir}/*email*.txt
 %{gitexecdir}/*email*
 %{?with_docs:%{_mandir}/man1/*email*.1*}
-%{?with_docs:%{_pkgdocdir}/*email*.html}
+# %{?with_docs:%{_pkgdocdir}/*email*.html}
 
 %files -n gitk
 %{_pkgdocdir}/*gitk*.txt
@@ -980,14 +980,14 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{_datadir}/gitk
 %{bash_completions_dir}/gitk
 %{?with_docs:%{_mandir}/man1/*gitk*.1*}
-%{?with_docs:%{_pkgdocdir}/*gitk*.html}
+# %{?with_docs:%{_pkgdocdir}/*gitk*.html}
 
 %files -n gitweb
 %{_pkgdocdir}/*.gitweb
 %{_pkgdocdir}/gitweb*.txt
 %{?with_docs:%{_mandir}/man1/gitweb.1*}
 %{?with_docs:%{_mandir}/man5/gitweb.conf.5*}
-%{?with_docs:%{_pkgdocdir}/gitweb*.html}
+# %{?with_docs:%{_pkgdocdir}/gitweb*.html}
 %config(noreplace)%{_sysconfdir}/gitweb.conf
 %config(noreplace)%{_sysconfdir}/httpd/conf.d/%{gitweb_httpd_conf}
 %{_localstatedir}/www/git/
@@ -997,26 +997,26 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{gitexecdir}/git-citool
 %{_datadir}/applications/*git-gui.desktop
 %{_datadir}/git-gui/
-%{_pkgdocdir}/git-gui.txt
-%{_pkgdocdir}/git-citool.txt
+# %{_pkgdocdir}/git-gui.txt
+# %{_pkgdocdir}/git-citool.txt
 %{?with_docs:%{_mandir}/man1/git-gui.1*}
-%{?with_docs:%{_pkgdocdir}/git-gui.html}
+# %{?with_docs:%{_pkgdocdir}/git-gui.html}
 %{?with_docs:%{_mandir}/man1/git-citool.1*}
-%{?with_docs:%{_pkgdocdir}/git-citool.html}
+# %{?with_docs:%{_pkgdocdir}/git-citool.html}
 
 %files instaweb
 %{gitexecdir}/git-instaweb
 %{_pkgdocdir}/git-instaweb.txt
 %{?with_docs:%{_mandir}/man1/git-instaweb.1*}
-%{?with_docs:%{_pkgdocdir}/git-instaweb.html}
+# %{?with_docs:%{_pkgdocdir}/git-instaweb.html}
 
 %if %{with p4}
 %files p4
 %{gitexecdir}/*p4*
 %{gitexecdir}/mergetools/p4merge
-%{_pkgdocdir}/*p4*.txt
+# %{_pkgdocdir}/*p4*.txt
 %{?with_docs:%{_mandir}/man1/*p4*.1*}
-%{?with_docs:%{_pkgdocdir}/*p4*.html}
+# %{?with_docs:%{_pkgdocdir}/*p4*.html}
 %endif
 # endif with p4
 
@@ -1027,15 +1027,15 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 
 %files subtree
 %{gitexecdir}/git-subtree
-%{_pkgdocdir}/git-subtree.txt
+# %{_pkgdocdir}/git-subtree.txt
 %{?with_docs:%{_mandir}/man1/git-subtree.1*}
-%{?with_docs:%{_pkgdocdir}/git-subtree.html}
+# %{?with_docs:%{_pkgdocdir}/git-subtree.html}
 
 %files svn
 %{gitexecdir}/git-svn
-%{_pkgdocdir}/git-svn.txt
+# %{_pkgdocdir}/git-svn.txt
 %{?with_docs:%{_mandir}/man1/git-svn.1*}
-%{?with_docs:%{_pkgdocdir}/git-svn.html}
+# %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
 * Wed Jul 9 2025 Jamie Curnow <jc@jc21.com> - 2.50.1-1
