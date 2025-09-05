@@ -1,3 +1,5 @@
+%global debug_package %{nil}
+
 # Pass --without docs to rpmbuild if you don't want the documentation
 %bcond_without docs
 
@@ -77,7 +79,7 @@
 %global _package_note_file  %{_builddir}/%{name}-%{real_version}/.package_note-%{name}-%{version}-%{release}.%{_arch}.ld
 
 Name:           git
-Version:        2.50.1
+Version:        2.51.0
 Release:        1%{?dist}
 Summary:        Fast Version Control System
 License:        BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -726,11 +728,11 @@ install -pm 644 contrib/completion/git-completion.tcsh \
     %{buildroot}%{_datadir}/git-core/contrib/completion/
 
 # Move contrib/hooks out of %%docdir
-mkdir -p %{buildroot}%{_datadir}/git-core/contrib
-mv contrib/hooks %{buildroot}%{_datadir}/git-core/contrib
-pushd contrib > /dev/null
-ln -s ../../../git-core/contrib/hooks
-popd > /dev/null
+# mkdir -p %{buildroot}%{_datadir}/git-core/contrib
+# mv contrib/hooks %{buildroot}%{_datadir}/git-core/contrib
+# pushd contrib > /dev/null
+# ln -s ../../../git-core/contrib/hooks
+# popd > /dev/null
 
 # Install git-prompt.sh
 mkdir -p %{buildroot}%{_datadir}/git-core/contrib/completion
@@ -911,8 +913,8 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 
 %files -f bin-man-doc-git-files
 %{_datadir}/git-core/contrib/diff-highlight
-%{_datadir}/git-core/contrib/hooks/update-paranoid
-%{_datadir}/git-core/contrib/hooks/setgitperms.perl
+# %{_datadir}/git-core/contrib/hooks/update-paranoid
+# %{_datadir}/git-core/contrib/hooks/setgitperms.perl
 %{_datadir}/git-core/templates/hooks/fsmonitor-watchman.sample
 %{_datadir}/git-core/templates/hooks/pre-rebase.sample
 %{_datadir}/git-core/templates/hooks/prepare-commit-msg.sample
@@ -927,8 +929,8 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %license COPYING
 # exclude is best way here because of troubles with symlinks inside git-core/
 %exclude %{_datadir}/git-core/contrib/diff-highlight
-%exclude %{_datadir}/git-core/contrib/hooks/update-paranoid
-%exclude %{_datadir}/git-core/contrib/hooks/setgitperms.perl
+# %exclude %{_datadir}/git-core/contrib/hooks/update-paranoid
+# %exclude %{_datadir}/git-core/contrib/hooks/setgitperms.perl
 %exclude %{_datadir}/git-core/templates/hooks/fsmonitor-watchman.sample
 %exclude %{_datadir}/git-core/templates/hooks/pre-rebase.sample
 %exclude %{_datadir}/git-core/templates/hooks/prepare-commit-msg.sample
@@ -941,7 +943,7 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %exclude %{_pkgdocdir}/contrib/*/*.py[co]
 %endif
 # endif rhel <= 7
-%{_pkgdocdir}/contrib/hooks
+# %{_pkgdocdir}/contrib/hooks
 
 %if %{with libsecret}
 %files credential-libsecret
@@ -960,22 +962,22 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 # endif with cvs
 
 %files daemon
-# %{_pkgdocdir}/git-daemon*.txt
+%{_pkgdocdir}/git-daemon*.html
 %{_unitdir}/git.socket
 %{_unitdir}/git@.service
 %{gitexecdir}/git-daemon
 %{_localstatedir}/lib/git
 %{?with_docs:%{_mandir}/man1/git-daemon*.1*}
-# %{?with_docs:%{_pkgdocdir}/git-daemon*.html}
+%{?with_docs:%{_pkgdocdir}/git-daemon*.html}
 
 %files email
-# %{_pkgdocdir}/*email*.txt
+%{_pkgdocdir}/*email*.html
 %{gitexecdir}/*email*
 %{?with_docs:%{_mandir}/man1/*email*.1*}
-# %{?with_docs:%{_pkgdocdir}/*email*.html}
+%{?with_docs:%{_pkgdocdir}/*email*.html}
 
 %files -n gitk
-%{_pkgdocdir}/*gitk*.txt
+%{_pkgdocdir}/*gitk*.html
 %{_bindir}/*gitk*
 %{_datadir}/gitk
 %{bash_completions_dir}/gitk
@@ -984,10 +986,10 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 
 %files -n gitweb
 %{_pkgdocdir}/*.gitweb
-%{_pkgdocdir}/gitweb*.txt
+%{_pkgdocdir}/gitweb*.html
 %{?with_docs:%{_mandir}/man1/gitweb.1*}
 %{?with_docs:%{_mandir}/man5/gitweb.conf.5*}
-# %{?with_docs:%{_pkgdocdir}/gitweb*.html}
+%{?with_docs:%{_pkgdocdir}/gitweb*.html}
 %config(noreplace)%{_sysconfdir}/gitweb.conf
 %config(noreplace)%{_sysconfdir}/httpd/conf.d/%{gitweb_httpd_conf}
 %{_localstatedir}/www/git/
@@ -997,26 +999,26 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{gitexecdir}/git-citool
 %{_datadir}/applications/*git-gui.desktop
 %{_datadir}/git-gui/
-# %{_pkgdocdir}/git-gui.txt
-# %{_pkgdocdir}/git-citool.txt
+%{_pkgdocdir}/git-gui.html
+%{_pkgdocdir}/git-citool.html
 %{?with_docs:%{_mandir}/man1/git-gui.1*}
-# %{?with_docs:%{_pkgdocdir}/git-gui.html}
+%{?with_docs:%{_pkgdocdir}/git-gui.html}
 %{?with_docs:%{_mandir}/man1/git-citool.1*}
-# %{?with_docs:%{_pkgdocdir}/git-citool.html}
+%{?with_docs:%{_pkgdocdir}/git-citool.html}
 
 %files instaweb
 %{gitexecdir}/git-instaweb
-%{_pkgdocdir}/git-instaweb.txt
+%{_pkgdocdir}/git-instaweb.html
 %{?with_docs:%{_mandir}/man1/git-instaweb.1*}
-# %{?with_docs:%{_pkgdocdir}/git-instaweb.html}
+%{?with_docs:%{_pkgdocdir}/git-instaweb.html}
 
 %if %{with p4}
 %files p4
 %{gitexecdir}/*p4*
 %{gitexecdir}/mergetools/p4merge
-# %{_pkgdocdir}/*p4*.txt
+%{_pkgdocdir}/*p4*.html
 %{?with_docs:%{_mandir}/man1/*p4*.1*}
-# %{?with_docs:%{_pkgdocdir}/*p4*.html}
+%{?with_docs:%{_pkgdocdir}/*p4*.html}
 %endif
 # endif with p4
 
@@ -1028,39 +1030,42 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %files subtree
 %{gitexecdir}/git-subtree
 # %{_pkgdocdir}/git-subtree.txt
-%{?with_docs:%{_mandir}/man1/git-subtree.1*}
+# %{?with_docs:%{_mandir}/man1/git-subtree.1*}
 # %{?with_docs:%{_pkgdocdir}/git-subtree.html}
 
 %files svn
 %{gitexecdir}/git-svn
-# %{_pkgdocdir}/git-svn.txt
+%{_pkgdocdir}/git-svn.html
 %{?with_docs:%{_mandir}/man1/git-svn.1*}
-# %{?with_docs:%{_pkgdocdir}/git-svn.html}
+%{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Fri Sep 5 2025 Jamie Curnow <jc@jc21.com> - 2.51.0-1
+- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.51.0.adoc
+
 * Wed Jul 9 2025 Jamie Curnow <jc@jc21.com> - 2.50.1-1
-- update to 2.50.1
+- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.50.1.adoc
 
 * Mon Apr 21 2025 Jamie Curnow <jc@jc21.com> - 2.49.0-1
-- update to 2.49.0
+- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.49.0.adoc
 
 * Wed Feb 26 2025 Jamie Curnow <jc@jc21.com> - 2.48.1-1
-- update to 2.48.1
+- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.48.1.adoc
 
 * Wed Jan 15 2025 Jamie Curnow <jc@jc21.com> - 2.48.0-1
-- update to 2.48.0
+- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.48.0.adoc
 
 * Thu Aug 1 2024 Jamie Curnow <jc@jc21.com> - 2.46.0-1
-- update to 2.46.0
+- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.46.0.adoc
 
 * Wed May 15 2024 Ondřej Pohořelský <opohorel@redhat.com> - 2.45.1-1
-- update to 2.45.1
+- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.45.1.adoc
 
 * Tue Apr 30 2024 Ondřej Pohořelský <opohorel@redhat.com> - 2.45.0-1
-- update to 2.45.0
+- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.45.0.adoc
 
 * Mon Feb 26 2024 Ondřej Pohořelský <opohorel@redhat.com> - 2.44.0-1
-- update to 2.44.0
+- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.44.0.adoc
 
 * Thu Feb 15 2024 Ondřej Pohořelský <opohorel@redhat.com> - 2.43.2-1
 - update to 2.43.2
