@@ -33,19 +33,18 @@ diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
 index 2fb1b2ae56..4afdf5a6aa 100644
 --- a/t/lib-httpd.sh
 +++ b/t/lib-httpd.sh
-@@ -206,19 +206,26 @@ enable_cgipassauth () {
+@@ -231,18 +231,28 @@ enable_cgipassauth () {
  }
- 
+
  start_httpd() {
 -	prepare_httpd >&3 2>&4
 -
  	test_atexit stop_httpd
- 
--	"$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
+
+-	if ! "$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
 -		-f "$TEST_PATH/apache.conf" $HTTPD_PARA \
 -		-c "Listen 127.0.0.1:$LIB_HTTPD_PORT" -k start \
 -		>&3 2>&4
--	if test $? -ne 0
 -	then
 -		cat "$HTTPD_ROOT_PATH"/error.log >&4 2>/dev/null
 -		test_skip_or_die GIT_TEST_HTTPD "web server setup failed"
@@ -56,11 +55,13 @@ index 2fb1b2ae56..4afdf5a6aa 100644
 +		i=$(($i + 1))
 +		prepare_httpd >&3 2>&4
 +		say >&3 "Starting httpd on port $LIB_HTTPD_PORT"
-+		"$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
++		if "$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
 +			-f "$TEST_PATH/apache.conf" $HTTPD_PARA \
 +			-c "Listen 127.0.0.1:$LIB_HTTPD_PORT" -k start \
 +			>&3 2>&4
-+		test $? -eq 0 && return
++		then
++			return
++		fi
 +		LIB_HTTPD_PORT=$(($LIB_HTTPD_PORT + 1))
 +		export LIB_HTTPD_PORT
 +		# clean up modules symlink, prepare_httpd will re-create it
@@ -69,5 +70,5 @@ index 2fb1b2ae56..4afdf5a6aa 100644
 +	cat "$HTTPD_ROOT_PATH"/error.log >&4 2>/dev/null
 +	test_skip_or_die GIT_TEST_HTTPD "web server setup failed"
  }
- 
+
  stop_httpd() {

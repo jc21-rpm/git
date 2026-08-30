@@ -563,6 +563,7 @@ INSTALL_SYMLINKS = 1
 GITWEB_PROJECTROOT = %{_localstatedir}/lib/git
 GNU_ROFF = 1
 NO_PERL_CPAN_FALLBACKS = 1
+NO_RUST = 1
 %if 0%{?rhel} && 0%{?rhel} < 8
 NO_UNCOMPRESS2 = 1
 %endif
