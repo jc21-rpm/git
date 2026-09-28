@@ -79,7 +79,7 @@
 %global _package_note_file  %{_builddir}/%{name}-%{real_version}/.package_note-%{name}-%{version}-%{release}.%{_arch}.ld
 
 Name:           git
-Version:        2.55.0
+Version:        2.56.0
 Release:        1%{?dist}
 Summary:        Fast Version Control System
 License:        BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1041,6 +1041,9 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Tue Sep 29 2026 Jamie Curnow <jc@jc21.com> - 2.56.0-1
+- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.56.0.adoc
+
 * Sun Aug 30 2026 Jamie Curnow <jc@jc21.com> - 2.55.0-1
 - https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2.55.0.adoc
 
