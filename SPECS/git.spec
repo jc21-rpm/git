@@ -829,6 +829,19 @@ GIT_SKIP_TESTS="$GIT_SKIP_TESTS t5559"
 %endif
 # endif rhel < 8
 
+%if 0%{?rhel} == 8
+# Skip tests which require CURLINFO_RETRY_AFTER (curl >= 7.66.0) on el8
+#
+# el8 ships curl 7.61.1, so git cannot read the server's Retry-After header.
+# t5584.6  'HTTP 429 retry delays are respected'
+# t5584.7  'HTTP 429 fails immediately if Retry-After exceeds http.maxRetryTime'
+# t5584.9  'HTTP 429 with Retry-After HTTP-date format'
+# t5584.10 'HTTP 429 with HTTP-date exceeding maxRetryTime fails immediately'
+# t5584.16 'GIT_HTTP_MAX_RETRY_TIME overrides http.maxRetryTime config'
+GIT_SKIP_TESTS="$GIT_SKIP_TESTS t5584.[679] t5584.1[06]"
+%endif
+# endif rhel == 8
+
 %ifarch aarch64 %{arm} %{power64}
 # Skip tests which fail on aarch64, arm, and ppc
 #
