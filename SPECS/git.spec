@@ -247,6 +247,7 @@ BuildRequires:  perl(CGI::Carp)
 BuildRequires:  perl(CGI::Util)
 BuildRequires:  perl(DBD::SQLite)
 BuildRequires:  perl(Digest::MD5)
+BuildRequires:  perl(Digest::SHA)
 BuildRequires:  perl(Fcntl)
 BuildRequires:  perl(File::Basename)
 BuildRequires:  perl(File::Copy)
@@ -914,8 +915,8 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 
 %files -f bin-man-doc-git-files
 %{_datadir}/git-core/contrib/diff-highlight
-# %{_datadir}/git-core/contrib/hooks/update-paranoid
-# %{_datadir}/git-core/contrib/hooks/setgitperms.perl
+# %%{_datadir}/git-core/contrib/hooks/update-paranoid
+# %%{_datadir}/git-core/contrib/hooks/setgitperms.perl
 %{_datadir}/git-core/templates/hooks/fsmonitor-watchman.sample
 %{_datadir}/git-core/templates/hooks/pre-rebase.sample
 %{_datadir}/git-core/templates/hooks/prepare-commit-msg.sample
@@ -930,8 +931,8 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %license COPYING
 # exclude is best way here because of troubles with symlinks inside git-core/
 %exclude %{_datadir}/git-core/contrib/diff-highlight
-# %exclude %{_datadir}/git-core/contrib/hooks/update-paranoid
-# %exclude %{_datadir}/git-core/contrib/hooks/setgitperms.perl
+# %%exclude %%{_datadir}/git-core/contrib/hooks/update-paranoid
+# %%exclude %%{_datadir}/git-core/contrib/hooks/setgitperms.perl
 %exclude %{_datadir}/git-core/templates/hooks/fsmonitor-watchman.sample
 %exclude %{_datadir}/git-core/templates/hooks/pre-rebase.sample
 %exclude %{_datadir}/git-core/templates/hooks/prepare-commit-msg.sample
@@ -944,7 +945,7 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %exclude %{_pkgdocdir}/contrib/*/*.py[co]
 %endif
 # endif rhel <= 7
-# %{_pkgdocdir}/contrib/hooks
+# %%{_pkgdocdir}/contrib/hooks
 
 %if %{with libsecret}
 %files credential-libsecret
@@ -954,11 +955,11 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 
 %if %{with cvs}
 %files cvs
-# %{_pkgdocdir}/*git-cvs*.txt
+# %%{_pkgdocdir}/*git-cvs*.txt
 %{_bindir}/git-cvsserver
 %{gitexecdir}/*cvs*
 %{?with_docs:%{_mandir}/man1/*cvs*.1*}
-# %{?with_docs:%{_pkgdocdir}/*git-cvs*.html}
+# %%{?with_docs:%%{_pkgdocdir}/*git-cvs*.html}
 %endif
 # endif with cvs
 
@@ -983,7 +984,7 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{_datadir}/gitk
 %{bash_completions_dir}/gitk
 %{?with_docs:%{_mandir}/man1/*gitk*.1*}
-# %{?with_docs:%{_pkgdocdir}/*gitk*.html}
+# %%{?with_docs:%%{_pkgdocdir}/*gitk*.html}
 
 %files -n gitweb
 %{_pkgdocdir}/*.gitweb
@@ -1030,9 +1031,9 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 
 %files subtree
 %{gitexecdir}/git-subtree
-# %{_pkgdocdir}/git-subtree.txt
-# %{?with_docs:%{_mandir}/man1/git-subtree.1*}
-# %{?with_docs:%{_pkgdocdir}/git-subtree.html}
+# %%{_pkgdocdir}/git-subtree.txt
+# %%{?with_docs:%%{_mandir}/man1/git-subtree.1*}
+# %%{?with_docs:%%{_pkgdocdir}/git-subtree.html}
 
 %files svn
 %{gitexecdir}/git-svn
